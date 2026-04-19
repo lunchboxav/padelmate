@@ -24,6 +24,25 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
     }
   }, [state.session]);
 
+  const handleShare = async () => {
+    if (!state.session) return;
+    const url = `${window.location.origin}/session/${state.session.id}/leaderboard`;
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'PadelMate Results',
+          text: `Check out the final standings for ${state.session.label}!`,
+          url: url
+        });
+      } else {
+        await navigator.clipboard.writeText(url);
+        alert('Link copied to clipboard!');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  };
+
   if (state.loading || !state.session) return <div className="view-wrapper">Loading...</div>;
 
   return (
@@ -89,7 +108,7 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
 
       {finished && (
         <div className={styles.actions}>
-          <button className="btn-secondary" onClick={() => alert('M1 Feature: Shareable Link')}>
+          <button className="btn-secondary" onClick={handleShare}>
             <Share2 size={20} /> Share Result
           </button>
           <button className="btn-primary" onClick={() => navigate('/')}>
