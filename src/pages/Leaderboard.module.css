@@ -1,0 +1,112 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.iconBtn {
+  color: var(--text-muted);
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.iconBtn:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+.finishedBanner {
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 32px;
+  animation: fadeDown 0.5s ease;
+}
+.finishedBanner h2 {
+  color: #fde047;
+  margin: 12px 0 4px;
+  font-size: 20px;
+}
+.finishedBanner p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.tableWrapper {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th {
+  background: rgba(0,0,0,0.2);
+  padding: 12px 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+.table td {
+  padding: 12px 8px;
+  border-top: 1px solid var(--surface-border);
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+}
+.table tr {
+  transition: background 0.2s;
+}
+.table tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+.rankCell {
+  font-weight: 800;
+  color: var(--text-muted);
+}
+.top1 {
+  background: linear-gradient(90deg, rgba(234, 179, 8, 0.15), transparent);
+}
+.top1 .rankCell { color: #fde047; }
+.top2 {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.1), transparent);
+}
+.top2 .rankCell { color: #cbd5e1; }
+.top3 {
+  background: linear-gradient(90deg, rgba(180, 83, 9, 0.15), transparent);
+}
+.top3 .rankCell { color: #d97706; }
+
+.playerInfo {
+  display: flex;
+  flex-direction: column;
+}
+.playerInfo strong {
+  font-weight: 600;
+  font-size: 15px;
+}
+.playerInfo span {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.winCell {
+  font-weight: 700;
+  color: var(--success);
+}
+.posDiff { color: #4ade80; font-weight: 600; }
+.negDiff { color: #ef4444; }
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
