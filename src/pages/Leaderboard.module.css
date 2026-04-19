@@ -32,6 +32,34 @@
   font-size: 14px;
   color: var(--text-muted);
 }
+.toggleWrapper {
+  display: flex;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+.toggleBtn {
+  flex: 1;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  background: transparent;
+}
+.toggleBtn:hover {
+  color: var(--text);
+}
+.toggleBtn.active {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .tableWrapper {
   background: var(--surface);
   border: 1px solid var(--surface-border);

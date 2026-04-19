@@ -11,6 +11,7 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
   const navigate = useNavigate();
   const { state, loadSession } = useSession();
   const [stats, setStats] = useState<PlayerStats[]>([]);
+  const [sortMode, setSortMode] = useState<'standard' | 'points'>('standard');
 
   useEffect(() => {
     if (id && (!state.session || state.session.id !== id)) {
@@ -45,6 +46,13 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
 
   if (state.loading || !state.session) return <div className="view-wrapper">Loading...</div>;
 
+  const displayedStats = [...stats].sort((a, b) => {
+    if (sortMode === 'points') {
+      return b.PF - a.PF || b.W - a.W || b.Diff - a.Diff || a.name.localeCompare(b.name);
+    }
+    return b.W - a.W || b.Diff - a.Diff || b.PF - a.PF || a.name.localeCompare(b.name);
+  });
+
   return (
     <div className="view-wrapper" style={{ paddingBottom: 40 }}>
       <header className={styles.header}>
@@ -63,6 +71,21 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
         </div>
       )}
 
+      <div className={styles.toggleWrapper}>
+        <button 
+          className={`${styles.toggleBtn} ${sortMode === 'standard' ? styles.active : ''}`}
+          onClick={() => setSortMode('standard')}
+        >
+          Standard (Wins)
+        </button>
+        <button 
+          className={`${styles.toggleBtn} ${sortMode === 'points' ? styles.active : ''}`}
+          onClick={() => setSortMode('points')}
+        >
+          Total Points
+        </button>
+      </div>
+
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
           <thead>
@@ -72,11 +95,18 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
               <th>W</th>
               <th>L</th>
               <th>Diff</th>
-              <th>PF</th>
+              {sortMode === 'points' ? (
+                <>
+                  <th>PF</th>
+                  <th>PA</th>
+                </>
+              ) : (
+                <th>TP</th>
+              )}
             </tr>
           </thead>
           <tbody>
-            {stats.map((stat, idx) => (
+            {displayedStats.map((stat, idx) => (
               <tr key={stat.playerId} className={idx < 3 ? styles[`top${idx+1}`] : ''}>
                 <td className={styles.rankCell}>
                   {idx === 0 ? <Crown size={16} color="#fde047" /> : idx + 1}
@@ -92,7 +122,14 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
                 <td className={stat.Diff > 0 ? styles.posDiff : stat.Diff < 0 ? styles.negDiff : ''}>
                   {stat.Diff > 0 ? '+' : ''}{stat.Diff}
                 </td>
-                <td>{stat.PF}</td>
+                {sortMode === 'points' ? (
+                  <>
+                    <td style={{ fontWeight: 600 }}>{stat.PF}</td>
+                    <td style={{ color: 'var(--text-muted)' }}>{stat.PA}</td>
+                  </>
+                ) : (
+                  <td>{stat.PF}</td>
+                )}
               </tr>
             ))}
             {stats.length === 0 && (
