@@ -48,7 +48,7 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
 
   const displayedStats = [...stats].sort((a, b) => {
     if (sortMode === 'points') {
-      return b.PF - a.PF || b.W - a.W || b.Diff - a.Diff || a.name.localeCompare(b.name);
+      return b.Diff - a.Diff || b.PF - a.PF || b.W - a.W || a.name.localeCompare(b.name);
     }
     return b.W - a.W || b.Diff - a.Diff || b.PF - a.PF || a.name.localeCompare(b.name);
   });
@@ -82,7 +82,7 @@ export default function Leaderboard({ finished = false }: { finished?: boolean }
           className={`${styles.toggleBtn} ${sortMode === 'points' ? styles.active : ''}`}
           onClick={() => setSortMode('points')}
         >
-          Total Points
+          Point Based
         </button>
       </div>
 
